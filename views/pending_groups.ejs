@@ -1,0 +1,56 @@
+<!-- PRIMARY AUTHOR: Calvin Li -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title  %></title>
+        <%- include partials/header.ejs %>
+        <%- include partials/events_header.ejs %>
+        <link rel='stylesheet' type='text/css' href='/stylesheets/pending_groups.css'>
+        <script type='text/javascript' src='/javascripts/pending_group_controllers.js'></script>
+    </head>
+    <body ng-app='loopApp' ng-controller='pendingGroupsCtrl'>
+        <%- include partials/navbar.ejs %>
+        
+        <div class='page-container' ng-app='loopApp'>
+            <div class='alert alert-danger alert-dismissible fade in animate-hide' id='pendingGroupsError' ng-show='errorMsg'>
+                <strong>Error</strong>: <span ng-bind='errorMsg'></span>
+            </div>
+            <div class='alert alert-success alert-dismissible fade in animate-hide' id='pendingGroupsSuccess' ng-show='successMsg'>
+                <strong>Success</strong>: <span ng-bind='successMsg'></span>
+            </div>
+            <h1>Pending Groups</h1>
+            <div class='panel-group' id='pendingGroupList' role='tablist' aria-multiselectable='true'>
+                <div class='panel pending-group-container' ng-repeat='group in pendingGroups'>
+                    <div class='panel-heading' role='tab' id='heading{{$index}}'>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div data-toggle='collapse' data-parent='#pendingGroupList' href='#collapse{{$index}}' aria-expanded='true' aria-controls='collapse{{$index}}'>
+                                        <div class='p-group-name' ng-bind='group.name'></div>
+                                    </div>
+                                </td>
+                                <td class='p-group-buttons'>
+                                    <button class='btn btn-default btn-small' ng-click='approvePendingGroup(group._id)'>Approve</button>
+                                    <button class='btn btn-default btn-small' ng-click='denyPendingGroup(group._id)'>Deny</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div id='collapse{{$index}}' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading{{$index}}'> 
+                        <div class='panel-body'>
+                            <div class='p-group-creator'>
+                                <strong>Creator</strong> - 
+                                <span ng-bind='group.creator.name'></span> (<span ng-bind='group.creator.email'></span>)
+                            </div>
+                            <div class='p-group-desc'>
+                                <strong>Description</strong>
+                                <div ng-bind='group.description' class='paragraph-content'></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

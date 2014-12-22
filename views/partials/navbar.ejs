@@ -1,0 +1,94 @@
+<!-- PRIMARY AUTHOR: Calvin Li, Mikael Mengistu -->
+
+<nav class='navbar navbar-default' id='navbarContainer' role='navigation'>
+<script src='/javascripts/signup.js'></script>
+	<div class='container-fluid'>
+		<!-- Brand and toggle get grouped for better mobile display -->
+		<div class='navbar-header'>
+			<button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbarTabs'>
+				<span class='sr-only'>Toggle navigation</span>
+				<span class='icon-bar'></span>
+				<span class='icon-bar'></span>
+				<span class='icon-bar'></span>
+			</button>
+			<a class='navbar-brand' id='navBrand' href='/'>MIT Loop</a>
+		</div>
+
+		<!-- Collect the nav links, forms, and other content for toggling -->
+		<div class='collapse navbar-collapse' id='navbarTabs'>
+			<ul class='nav navbar-nav'>
+				<li class='nav-tab <% if(page==="home"){ %>active<%}%>' id='navTabHome'><a href='/'>Home<span class='sr-only'>(current)</span></a></li>
+				<li class='nav-tab <% if(page==="groups"){ %>active<%}%>' id='navTabGroups'><a href='/groups'>Groups</a></li>
+				
+				<% if ( session.name != undefined && !session.isAdmin ){ %>
+					<li class='nav-tab <% if(page==="settings"){ %>active<%}%>' id='navTabGroups'><a href='/settings'>Settings</a></li>
+				<% }%>
+				
+				<% if ( session.isAdmin ) { %>
+					<li class='nav-tab <% if(page==="pending_groups"){ %>active<%}%>' id='navTabPendingGroups'><a href='/pending_groups'>Pending Groups</a></li>
+				<% } %>
+                
+			</ul>
+			<ul class='nav navbar-nav navbar-right'>
+
+				<% if (session == undefined || session.name == undefined){ %>
+					<li>
+						<button type='button' data-toggle='modal' data-target='#userLoginModal' class='btn btn-default navbar-btn'>Log in</button>
+					</li>
+				<% } else { %> 
+					<li id='navUserEmail'><%= session.name %></li>
+					<li> 
+						<form name="logoutForm" action="/api/users/logout" method="post">
+							<input type="submit"  class="btn btn-default navbar-btn" value = "Log out">
+						</form>
+					</li>
+				<% } %> 
+			</ul>
+		</div><!-- /.navbar-collapse -->
+	</div><!-- /.container-fluid -->
+</nav>
+
+<!-- Modal -->
+<div class='modal fade' id='userLoginModal' tabindex='-1' role='dialog' aria-hidden='true'>
+	<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+				<h4 class='modal-title' id='loginModalLabel'></h4>
+			</div>
+			<div class='modal-body login-modal-body' >
+
+				<div id = "signIn" >
+					<form name='loginForm' action='/api/users/login' method='post'>
+						<div>Email: <input type='text' name='email' class='form-control' id='loginEmail' required></div>
+						<div>Password: <input type='password' name='password' class='form-control' id='loginPassword' required></div>
+						<div class='modal-footer'>
+							<input type='button' value='New User' class='btn btn-default' id='addUserButton' onclick = "toggleSigninSignUp(true)">
+							 <a href="/send_password"> <input type='button' value='Forgot Password?' class='btn btn-default' id='sendToForgotPassword' onclick = "toggleSigninSignUp(false)"></a>
+							<input type='submit' value='Submit' class='btn btn-default' id='loginSubmitButton'>
+						</div>
+					</form>
+				</div>
+
+				<div id = "newUser" hidden = "true" >
+				<div class ="loginCreds" >
+					<form name="adduser" action="/api/users" onsubmit="return validateForm()"method="post">
+						<div id = "badEmail"class="alert alert-danger" role="alert" hidden = "true">Must be an MIT email address!</div>
+						<div id = "passwordsDontMatch"class="alert alert-danger" role="alert" hidden = "true">Passwords don't match!</div>
+						<div>First Name: <input type="text" class='form-control' name="firstName" required></div>
+						<div>Last Name: <input type="text" class='form-control' name="lastName" required></div>
+						<div>MIT Email: <input type="text" class='form-control' name="email"></div>
+						<div>Password: <input type="password" class='form-control' name="password" required></div>
+						<div>Re-EnterPassword: <input type="password" class='form-control' name="secondPassword" required></div>
+						<div class='modal-footer'>
+							<input type='button' value='Return to Log in' class='btn btn-default' id='returnToLoginButton' onclick = "toggleSigninSignUp(false)">
+							 <a href="/send_password"> <input type='button' value='Forgot Password?' class='btn btn-default' id='sendToForgotPassword' onclick = "toggleSigninSignUp(false)"></a>
+							<input type="submit" class='btn btn-default' value="Submit" >
+						</div>
+					</form>			  
+			</div>	
+			</div>
+
+		</div>
+		</div> <!-- modal-content -->
+	</div>
+</div>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title  %></title>
+        <%- include partials/header.ejs %>
+        <%- include partials/events_header.ejs %>
+    </head>
+    <body>
+        <%- include partials/navbar.ejs %>
+        
+        <div class='page-container' ng-app='loopApp'>
+            <form id="eventImageForm">
+                <h4>Upload Image for Event</h4>
+                <input type='text' name='eventId' placeholder='Event ID' required><br>
+                <input type='text' name='groupId' placeholder='Group ID' required><br>
+                <input type='file' name='image' required>
+                <input type='submit' value='Upload Image'><br>
+            </form>
+            <br>
+            <br>
+            <form id="groupImageForm">
+                <h4>Upload Image for Group</h4>
+                <input type='text' name='groupId' placeholder='Group ID' required><br>
+                <input type='file' name='image' required>
+                <input type='submit' value='Upload Image'><br>
+            </form>
+        </div>
+
+        <script type="text/javascript">
+            $('#eventImageForm').on('submit', function(e) {
+                e.preventDefault();
+
+                //get formdata
+                var formData = new FormData($(this)[0]);
+
+                var eventId = $(this)[0].elements["eventId"].value;
+                var groupId = $(this)[0].elements["groupId"].value;
+
+                //upload images
+                $.ajax({
+                  url: '/api/groups/' + groupId + '/events/id/' + eventId + '/image',
+                  type: 'POST',
+                  data: formData,
+                  contentType: false,
+                  processData: false
+                });
+            });
+
+            $('#groupImageForm').on('submit', function(e) {
+                e.preventDefault();
+
+                //get formdata
+                var formData = new FormData($(this)[0]);
+
+                var groupId = $(this)[0].elements["groupId"].value;
+
+                //upload images
+                $.ajax({
+                  url: '/api/groups/' + groupId + '/image',
+                  type: 'POST',
+                  data: formData,
+                  contentType: false,
+                  processData: false
+                });
+            });
+        </script>
+    </body>
+</html>

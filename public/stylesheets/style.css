@@ -1,0 +1,24 @@
+body {
+	font-family: Roboto, Arial, sans-serif;
+}
+
+a {
+	color: #00B7FF;
+}
+
+.page-container {
+	max-width: 1170px;
+	margin-left: auto;
+	margin-right: auto;
+	padding: 20px;
+}
+
+.feed-container {
+	padding: 10px;
+	border-radius: 3px;
+	min-height: 250px;
+}
+
+.paragraph-content {
+    white-space: pre-wrap;
+}

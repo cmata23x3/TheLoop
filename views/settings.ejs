@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title  %></title>
+        <%- include partials/header.ejs %>
+        <%- include partials/events_header.ejs %>
+        <script src='/javascripts/index_controllers.js'></script>
+        <script src='/javascripts/signup.js'></script>
+    </head>
+    <body>
+        <%- include partials/navbar.ejs %>
+        <center>
+            <div>Delete my account</div>
+            <form name="deleteAccountForm" action="/api/users/delete" method="post">
+                <input type="submit"  class="btn btn-default navbar-btn" value = "Delete me" >
+            </form>
+        </center>       
+    </body>
+</html>

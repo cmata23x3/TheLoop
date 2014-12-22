@@ -1,0 +1,216 @@
+.modal-content {
+}
+
+.modal-backdrop.in {
+    opacity: 0.8;
+}
+
+.popover-content {
+    white-space: pre-wrap;
+    line-height: 1.2;
+    color: black;
+}
+
+.smooth-transition {
+    transition: 0.1s linear all;
+}
+
+.spacer {
+    height: 5px;
+}
+
+.container {
+    width: 600px;
+}
+
+.event-item {
+    cursor: default;
+    margin: 20px 0;
+    color: white;
+}
+
+.event-item .hidden {
+    visibility: hidden;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.event-banner {
+    height: 140px;
+    background-color: rgb(245,245,245);
+    position: relative;
+    background-size: 100%;
+}
+
+.event-banner-header {
+    padding: 3px 10px;
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    position: relative;
+}
+
+.event-image-input {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+#eventImageHiddenForm {
+    display: none;
+}
+
+.event-hover-icon {
+    cursor: pointer;
+}
+
+.event-hover-icon:hover {
+    opacity: 0.7;
+}
+
+.event-edit-icon {
+    height: 16px;
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 8px);
+}
+
+.event-item:hover .event-banner {
+    background-color: rgb(235,235,235);
+}
+
+.group-name {
+    font-weight: bold;
+    font-size: 16px;
+    color: white;
+    text-decoration: none;
+}
+
+.group-name:hover{
+    color: hsla(0, 50%, 40%, 1);
+}
+
+.group-follow {
+    color: hsla(0, 50%, 40%, 1);
+    font-size: 14px;
+    font-variant: small-caps;
+}
+
+.event-summary {
+    background-color: black;
+    padding: 5px 10px;
+    position: relative;
+}
+
+.editing .event-time-display span {
+    background-color: rgb(50,50,50);
+    cursor: pointer;
+}
+
+.editing .event-info {
+    display: none;
+}
+
+.not-editing .event-input {
+    display: none;
+}
+
+.event-time-input {
+    position: absolute;
+    top: -120px;
+    left: 100px;
+    background-color: white;
+    color: black;
+    padding: 10px;
+}
+
+.event-start-date-input {
+    float: left;
+}
+
+.event-start-time-input {
+    margin-left: 10px;
+    float: left;
+}
+
+.event-item:hover {
+    color: lightgray;
+}
+
+.event-name {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+input.event-input, textarea.event-input {
+    background-color: rgb(80,80,80);
+    border: none;
+}
+
+input.event-name {
+    width: 100%;
+}
+
+textarea.event-description {
+    min-width: 100%;
+    max-width:100%;
+}
+
+.event-tags {
+    height: 30px;
+}
+
+.event-tag {
+    color: grey;
+    margin-right: 5px;
+    margin-left: 1px;
+    vertical-align: middle;
+}
+
+.event-tag .glyphicon {
+    top: 3px;
+}
+
+.event-footer {
+    height: 30px;
+    font-size: 12px;
+}
+
+.event-post {
+    background-color: lightgray;
+    float: right;
+    color: black;
+    border: none;
+}
+
+.event-rsvp {
+    position: absolute;
+    right: 10px;
+    top: 8px;
+}
+
+.event-rsvp.btn, .event-rsvp .btn {
+    font-size: 12px;
+    padding: 4px 6px;
+    border: none;
+}
+
+.event-rsvp.btn:hover, .event-rsvp .btn:hover {
+    opacity: 0.8;
+}
+
+.event-attendance {
+    font-size: 10px;
+    position: absolute;
+    right: 10px;
+    top: 40px;
+}
+
+.event-day-separator {
+    border-bottom: 1px solid black;
+}
+
+select.event-location-general {
+    color: black;
+}

@@ -1,0 +1,26 @@
+.pending-group-container {
+    width: 100%;
+    border: 1px solid #ccaaaa;
+}
+
+.pending-group-container .panel-heading {
+    position: relative;
+    background-color: #ffeeee;
+}
+.pending-group-container .panel-heading table {
+    width: 100%;
+}
+.pending-group-container .panel-heading .p-group-buttons {
+    width: 140px;
+}
+
+.pending-group-container .p-group-name {
+    font-size: 24px;
+}
+.pending-group-container .p-group-name:hover {
+    color: #aa4444;
+    cursor: pointer;
+}
+.pending-group-container .p-group-creator {
+    margin-bottom: 10px;
+}

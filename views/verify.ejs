@@ -1,0 +1,21 @@
+<!-- PRIMARY AUTHOR: Mikael Mengistu -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title  %></title>
+        <%- include partials/header.ejs %>
+        <%- include partials/events_header.ejs %>
+        <script src='/javascripts/index_controllers.js'></script>
+    </head>
+    <body>   
+        <%- include partials/navbar.ejs %>
+        <center>
+            <div>Verify your account by entering your password</div>
+            <form name="deleteAccountForm" action= <%="/api/users/"  + session.userID +  "/verify" %> method="post">
+                <div>Password: <input type='password' name='verifyPassword' id='loginPassword' required></div>
+                <input type="submit"  class="btn btn-default navbar-btn" value = "Verify">
+            </form>
+        </center>      
+    </body>
+</html>

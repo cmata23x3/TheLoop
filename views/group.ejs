@@ -1,0 +1,109 @@
+<!-- PRIMARY AUTHOR: Christian Mata -->
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title><%= title %></title>
+	<%- include partials/header.ejs %>
+	<%- include partials/events_header.ejs %>
+	<link href='/stylesheets/groups.css' rel='stylesheet'>
+
+	<script src='http://underscorejs.org/underscore-min.js'></script>
+	<script src='/javascripts/group_controllers.js'></script>
+
+</head>
+<body  ng-app='loopApp' ng-controller='groupCtrl' >
+	<%- include partials/navbar.ejs %>
+	<div class='page-container'>
+		<div class='group-header'>
+			<h1>{{name}}</h1>
+			<a href='#' class='group-follow' ng-show='userId' ng-click='toggleFollowing()'>{{followingLabel}}</a>
+			<button class='btn create-event' ng-show='isAdmin' ng-click='updateEventDetailData(group)' data-toggle='modal' data-target='#eventModal'>Add Event</button>
+		</div><!-- Group Header -->
+		<div class='group-body row'>
+			<div class='group-left-pane col-md-3'>
+				<div class='group-description'>
+					<div class='group-description-label'>
+						<h5>Description</h5>
+						<div ng-show='isAdmin && !editing' ng-click='toggleDescriptionEdit()' class='glyphicon glyphicon-pencil edit-group-description'></div>
+					</div>
+					<legend></legend>
+					<div ng-hide='editing' class='group-description-text'>
+						<p class='paragraph-content'>{{description}}</p>
+					</div>
+					<div ng-show='editing'>
+						<textarea id='editingDescription' class='form-control' ng-model='editingDescription' autofocus> {{editingDescription}}</textarea>
+						<button class='btn btn-default' ng-click='submitDescriptionEdit()' ng-disabled='editingDescription==description'>Submit</button>
+						<button class='btn btn-default' ng-click='toggleDescriptionEdit()'>Cancel</button>
+					</div> <!-- Editing Description Div -->
+				</div> <!-- Group Description -->
+
+				<div class='group-manage' ng-show='isAdmin'>
+					<h5>Manage Admins</h5> 
+					<legend></legend>
+					<button class='btn btn-default btn-xs manage-admin-btn' ng-click='toggleManageAdmins()' ng-hide='managingAdmins'>Manage Admins</button>
+					<div class='manage-admin-controls' ng-show='isAdmin && managingAdmins'>
+						<div role="tabpanel">
+							<!-- Nav tabs -->
+							<ul class="nav nav-tabs" role="tablist">
+								<li role="presentation" class="active"><a data-target='#addAdmin' role="tab" data-toggle="tab">Add</a></li>
+								<li role="presentation"><a data-target='#removeAdmin' role="tab" data-toggle="tab">Remove</a></li>
+							</ul>
+
+							<!-- Tab panes -->
+							<div class="tab-content">
+								<div role="tabpanel" class="tab-pane fade in active" id="addAdmin">
+									<h6>Add a user as Admin</h6>
+									<div class='input-group'>
+										<input type='text' class='form-control' placeholder='User email' ng-model='newAdminEmail'>
+										<span class='input-group-btn'>
+											<button class='btn btn-default' type='button' ng-click='addAdmin()' ng-disabled='!isMITEmail(newAdminEmail)'>
+												<span class='glyphicon glyphicon-plus'></span>
+											</button>
+										</span> <!-- input group button-->
+									</div> <!-- Add Admin input group  -->
+								</div>
+								<div role="tabpanel" class="tab-pane fade" id="removeAdmin">
+									<h6>Remove an Admin</h6>
+									<div>
+										<div class="input-group" ng-repeat='admin in group.admins'>
+											<span class='glyphicon glyphicon-remove remove-admin-glyph' ng-click='removeAdmin(admin._id)'></span>
+											<span>{{admin.email}}</span>
+											</div><!-- Remove Admin input group  -->
+									</div>
+								</div>
+							</div>
+						</div>						
+					</div>
+				</div> <!-- Manage Admins Div -->
+
+				<!-- TODO: Add delete group button -->
+				<div class='group-delete-container' ng-show='isAdmin'>
+					<button class='btn btn-sm group-delete-btn btn-danger' data-toggle='modal' data-target='#deleteGroupModal'>Delete Group</button>
+				</div> <!-- Delete Group Div -->
+
+			</div> <!-- Group Left Pane -->
+			<div class='group-right-pane col-md-9 feed-container'>
+				<%- include partials/event_feed.ejs %>
+			</div> <!-- Group Right Pane -->
+		</div> <!-- Group Body -->
+	</div><!-- Page Container -->
+
+	<!-- Delete Group Modal -->
+	<div class='modal fade' id='deleteGroupModal' tabindex='-1' role='dialog' aria-hidden='true'>
+		<div class='modal-dialog'>
+			<div class='modal-content'>
+				<div class='modal-header'>
+					<h4 class='modal-title'>Delete Group</h4>
+				</div> <!-- Modal Header -->
+				<div class='modal-body' id='deleteGroupForm'>
+					<h5>This action CANNOT be undone. This will permanently delete the group and all events created.</h5>
+				</div> <!-- Modal Body -->
+				<div class='modal-footer'>
+					<button type='submit' class='btn btn-danger' data-dismiss='modal' ng-click='deleteGroup()'>Delete Group</button>
+				</div> <!-- Modal Footer -->
+			</div> <!-- modal-content -->
+		</div> <!-- modal-dialog -->
+	</div> <!-- deleteGroupModal -->
+</body>
+</html>

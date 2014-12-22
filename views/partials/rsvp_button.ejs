@@ -1,0 +1,25 @@
+<div class='event-rsvp event-info btn-group'
+     ng-if='loggedIn' dropdown ng-hide='rsvpHash[event._id] !== undefined'>
+    
+    <button class='btn btn-default smooth-transition' ng-click='toggleRSVP(event._id, true)'>RSVP</button>
+    <button class='btn btn-default smooth-transition dropdown-toggle' dropdown-toggle>
+        <span class='caret'></span>
+    </button>
+    <ul class='dropdown-menu' role='menu'>
+        <li><a href='#' class='ignore-link' ng-click='toggleRSVP(event._id, false)'>RSVP anonymously</a></li>
+    </ul>
+    
+</div>
+
+<button class='event-rsvp smooth-transition event-info btn btn-success' ng-click='toggleRSVP(event._id)'
+        ng-if='loggedIn' ng-hide='rsvpHash[event._id] === undefined'
+        ng-bind='"RSVPed as " + (rsvpHash[event._id] ? userKerberos : "<anon>")'>
+</button>
+
+<span
+      class='event-attendance event-info'
+      popover='{{ event ? formatAttendeesList(event.attendees, 10) : "No event!" }}'
+      popover-placement='left'
+      popover-trigger='mouseenter'>
+    {{ formatAttendance(numAttendeesHash[event._id]) }}
+</span>

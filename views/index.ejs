@@ -1,0 +1,62 @@
+<!-- PRIMARY AUTHOR: Richard Lu -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <title><%= title  %></title>
+        <%- include partials/header.ejs %>
+        <%- include partials/events_header.ejs %>
+        <script src='/javascripts/index_controllers.js'></script>
+    </head>
+    <body>
+        
+        <%- include partials/navbar.ejs %>
+        
+        <div class='page-container' ng-app='loopApp'>
+            
+            <% if (error != undefined) { %>
+                <div class="alert alert-danger alert-dismissible" role="alert">
+                    <button type="button" class="close" data-dismiss="alert">
+                        <span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+                    </button>
+                    <%= error %>
+                </div>
+            <% } %>
+            
+            <div class='row'>
+
+                <div class='col-md-3' ng-controller='feedStartDateController'>
+                    <h4>Select date to start from:</h4>
+                    <datepicker class='feed-search-from-date' ng-model='startDate' ng-change='setStartDate()' min-date='today' show-weeks='false'></datepicker>
+                    <h4>Filter by:</h4>
+                    <div class='well filter-box'>
+                        <div ng-hide='notUser'>
+                            <div class='checkbox'>
+                                <label><input type='checkbox' ng-model='filterRsvp'> RSVP'd</label>
+                            </div>
+                            <div class='checkbox'>
+                                <label><input type='checkbox' ng-model='filterFollowing'> Following</label>
+                            </div>
+                        </div>
+                        <h4>Tags</h4>
+                        <div ng-repeat='tag in filterTags' class='checkbox'>
+                            <label><input type='checkbox' ng-model='tag.selected'> {{ tag.tag }}</label>
+                        </div>
+                        <h4>General Locations</h4>
+                        <div ng-repeat='genloc in filterGenlocs' class='checkbox'>
+                            <label><input type='checkbox' ng-model='genloc.selected'> {{ genloc.genloc }}</label>
+                        </div>
+                        <br>
+                        <button class='btn btn-primary' ng-click='applyFilters()'>Apply Filters</button>
+                    </div>
+                </div>
+
+                <div class='col-md-9 feed-container'>
+                    <%- include partials/event_feed.ejs %>
+                </div>
+
+            </div>
+        </div>
+        
+    </body>
+</html>

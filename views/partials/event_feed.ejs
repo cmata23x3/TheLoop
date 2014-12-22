@@ -1,0 +1,119 @@
+<!-- PRIMARY AUTHOR: Richard Lu -->
+
+<div class='event-feed-container' ng-controller='eventFeedController'>
+
+    <div class='modal fade' id='eventModal'>
+        <div class='modal-dialog'>
+            <div class='modal-content event-item' ng-controller='eventModalController'>
+                <div class='event-banner smooth-transition' style='background-image:url("{{event["imageURL"]}}");'>
+                    <div class='event-banner-header'>
+                        <a href='/groups/{{event.group._id}}' class='group-name'>{{ event.group.name }}</a>
+                        <span class='glyphicon glyphicon-pencil event-edit-icon event-hover-icon event-edit event-info' ng-hide='!isAdmin'></span>
+                        <span class='glyphicon glyphicon-remove event-edit-icon event-hover-icon event-edit-cancel event-input' ng-click='reset()'></span>
+                    </div>
+                    
+                    <button class='btn btn-default btn-sm event-input event-image-input'>Change Image</button>
+                </div>
+                <div class='event-summary smooth-transition'>
+                    <span class='event-name event-info'>{{ event.name }}</span>
+                    <input class='event-name event-input' ng-model='event["name"]'>
+                    
+                    <div class='spacer'></div>
+                    
+                    <div class='event-time-display' ng-click='toggleTimeEditor()'>
+                        <b>When: </b>
+                        <span class='event-start-date'>{{ event.start | date : 'MMMM dd, yyyy' }}</span>,
+                        <span class='event-start'>{{ event.start | date : 'shortTime' }}</span>
+                        - <span class='event-end'>{{ event.end | date : 'shortTime' }}</span>
+                    </div>
+                    
+                    <b>Where: </b>
+                    <span class='event-location event-info'>{{ event.locationDescription }}</span>
+                    <input class='event-location event-input' ng-model='event["locationDescription"]'>
+                    <span class='event-location-general event-info'>({{ event.locationGeneral }})</span>
+                    <select class='event-location-general event-input' ng-model='event["locationGeneral"]' ng-options='location for location in ALLOWED_GENERAL_LOCATIONS'></select>
+                    
+                    <div class='spacer'></div>
+                    
+                    <div class='event-tags'>
+                        <b>Tags: </b>
+                        <span class='event-tag' ng-repeat='tag in event["tags"] track by $index'>
+                            <span class='event-tag-content'>{{ tag }}</span>
+                            <span class='glyphicon glyphicon-remove event-input event-hover-icon' ng-click='removeTag(tag)'></span>
+                        </span>
+                        <div class='btn-group event-add-tag event-input' dropdown>
+                            <btn class='btn btn-default btn-xs dropdown-toggle' dropdown-toggle>
+                                Add Tag <span class='caret'></span>
+                            </btn>
+                            <ul class='dropdown-menu' role='menu'>
+                                <li ng-repeat='allowedTag in ALLOWED_TAGS track by $index' ng-click='addTag(allowedTag)'>
+                                    <a href='#' class='event-allowed-tag'>{{ allowedTag }}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <p class='event-description paragraph-content event-info'>{{ event.description }}</p>
+                    <textarea class='event-description event-input' ng-model='event["description"]'></textarea>
+                    
+                    <div class='event-footer event-input'>
+                        <a href='#' class='event-cancel' ng-click='deleteEvent()'>Cancel Event</a>
+                        <button class='event-post btn smooth-transition' ng-click='createOrUpdateEvent()'>Post</button>
+                    </div>
+
+                    <%- include rsvp_button.ejs %>
+                    
+                    <div class='event-time-input hidden'>
+                        <span class='glyphicon glyphicon-remove event-hover-icon' ng-click='toggleTimeEditor(false)'></span>
+                        <datepicker class='event-start-date-input' ng-model='event["start"]' ng-change='updateEnd()' min-date='today' show-weeks='false'></datepicker>
+                        <div class='event-start-time-input'>
+                            <h5>Start Time:</h5>
+                            <timepicker ng-model='event["start"]' ng-change='updateEnd()' hour-step='1' minute-step='1' show-meridian='true'></timepicker>
+                            <h5>Duration:</h5>
+                            <timepicker ng-model='event["duration"]' ng-change='updateEnd()' hour-step='1' minute-step='1' show-meridian='false'></timepicker>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class='event-feed'>
+        
+        <div class='btn-group event-sort-selector'>
+            <label class='btn btn-default' ng-model='sortByPostTime' btn-radio='false'>Start</label>
+            <label class='btn btn-default' ng-model='sortByPostTime' btn-radio='true'>Posted</label>
+        </div>
+
+        <form id='eventImageHiddenForm'>
+            <input id='eventImageHiddenInput' type='file' accept='image/*' name='image'>
+        </form>
+        
+        <div ng-repeat='events in groupedEvents'>
+
+            <h4 class='event-day-separator'>{{ events[0].start | date : 'EEEE, MMMM dd' }}</h4>
+
+            <div class='event-item' ng-repeat='event in events' ng-click='updateEventDetailData(event)' data-toggle='modal' data-target='#eventModal'>
+                <div class='event-banner smooth-transition' style='background-image:url("{{event["imageURL"]}}");'>
+                    <div class='event-banner-header'>
+                        <a href='/groups/{{event.group._id}}' class='group-name'>{{ event.group.name }}</a>
+                    </div>
+                </div>
+                <div class='event-summary smooth-transition'>
+                    <span class='event-name'>{{ event.name }}</span>
+                    <br>
+                    @ <span class='event-location'>{{ event.locationDescription }}</span>
+                    <span class='event-location-general'>({{ event.locationGeneral }})</span>,
+                    <span class='event-start'>{{ event.start | date : 'shortTime' }}</span>
+                    - <span class='event-end'>{{ event.end | date : 'shortTime' }}</span>
+                    <br>
+                    <span class='event-tag' ng-repeat='tag in event["tags"] track by $index'>{{ tag }}</span>
+
+                    <%- include rsvp_button.ejs %>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

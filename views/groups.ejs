@@ -1,0 +1,93 @@
+<!-- PRIMARY AUTHOR: Christian Mata -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <%- include partials/header.ejs %>
+
+    <link href='/stylesheets/groups.css' rel='stylesheet'>
+    <script src='http://underscorejs.org/underscore-min.js'></script>
+    <script src='/javascripts/group_controllers.js'></script>
+</head>
+<body ng-app='loopApp' ng-controller='groupsCtrl'>
+    <%- include partials/navbar.ejs %>
+    <div class='row page-container groups-container'>
+        <div class='col-md-9 group-links'>
+            <div class='column col-md-4'>
+                <div class='groups-letter-div' ng-repeat='cluster in col1'>
+                    <div class='groups-header-name'>{{cluster.header}}</div>
+                    <div class='group-item' ng-repeat='group in cluster.groups'>
+                        <a href='/groups/{{group._id}}'>{{group.name}}</a>
+                    </div>
+                </div><!-- Group Container-->
+            </div>
+            <div class='column col-md-4'>
+                <div class='groups-letter-div' ng-repeat='cluster in col2'>
+                    <div class='groups-header-name'>{{cluster.header}}</div>
+                    <div class='group-item' ng-repeat='group in cluster.groups'>
+                        <a href='/groups/{{group._id}}'>{{group.name}}</a>
+                    </div>
+                </div><!-- Group Container-->
+            </div>
+            <div class='column col-md-4'>
+                <div class='groups-letter-div' ng-repeat='cluster in col3'>
+                    <div class='groups-header-name'>{{cluster.header}}</div>
+                    <div class='group-item' ng-repeat='group in cluster.groups'>
+                        <a href='/groups/{{group._id}}'>{{group.name}}</a>
+                    </div>
+                </div><!-- Group Container-->
+            </div>
+        </div><!-- Group Links Container-->
+
+        <div class='col-md-3 groups-manager'>
+            <!-- TODO: Sessions populated info -->
+            <div>
+                <span class='groups-manager-name'>My Admin Groups</span>
+                <div id='groups_admin' class='groups-manager-table group-item'>
+                    <div ng-repeat='group in adminGroups'>
+                        <a href='/groups/{{group._id}}'>{{group.name}}</a>
+                    </div>
+                </div> <!-- Groups Admin-->
+            </div>
+
+            <div>
+                <span class='groups-manager-name'>My Followed Groups</span>
+                <div id='groups_followed' class='groups-manager-table group-item'>
+                    <div ng-repeat='group in followingGroups'>
+                        <a href='/groups/{{group._id}}'>{{group.name}}</a>
+                    </div>
+
+                </div> <!-- Groups Followed-->
+            </div>
+
+            <div ng-hide='true'>
+                <span class='groups-manager-name'>My Pending Registrations</span>
+                <div id='groups_pending' class='groups-manager-table'>
+                    <div>
+                    </div>
+                </div>
+            </div>  <!-- Groups manager-->
+
+            <button class='groups-register-btn btn' data-toggle='modal' data-target='#groupRegisterModal' ng-show='userId'>Register New Group</button>
+        </div> <!-- Page Container-->
+
+        <!-- Modal -->
+        <div class='modal fade' id='groupRegisterModal' tabindex='-1' role='dialog' aria-hidden='true'>
+            <div class='modal-dialog'>
+                <div class='modal-content'>
+                    <div class='modal-header register-model-header'>
+                        <h4 class='register-modal-title'>New Group Registration</h4>
+                    </div> <!-- Modal Header -->
+                    <div class='modal-body' id='registerGroupForm'>
+                        <div>Name: <input type='text' name='name' class='form-control' ng-model="registrationName" required /></div>
+                        <div>Description: <textarea name='description' class='form-control' rows='3' form='registerGroupForm' ng-model="registrationDescription"></textarea></div>
+                    </div> <!-- Modal Body -->
+                    <div class='modal-footer register-model-footer'>
+                        <button type='submit' class='groups-register-btn btn btn-default' data-dismiss="modal" ng-click='submitGroupRegistration()'>Register</button>
+                    </div> <!-- Modal Footer -->
+                </div> <!-- modal-content -->
+            </div> <!-- modal-dialog -->
+        </div> <!-- groupRegisterModal -->
+    </body>
+    </html>

@@ -1,0 +1,18 @@
+<!-- General CSS -->
+<link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
+<link rel='stylesheet' type='text/css' href='http://fonts.googleapis.com/css?family=Roboto:400,300'>
+<link rel='stylesheet' type='text/css' href='/stylesheets/style.css'>
+<link rel='stylesheet' type='text/css' href='/stylesheets/navbar.css'>
+
+<!-- General JS -->
+<script src='https://code.jquery.com/jquery-2.1.1.min.js'></script>
+<script src='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.2.26/angular.min.js'></script>
+<script src="//angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.12.0.js"></script>
+
+<script>
+    var userId = '<%= (session) ? session.userId : undefined %>';
+    userId = userId !== 'undefined' ? userId : undefined;
+    var userKerberos = userId ? '<%= (session && session.name) ? session.name.substring(0, session.name.length - 8) : undefined %>' : undefined;
+    var isAdmin = <%= (session && session.isAdmin) ? true : false %>;
+</script>

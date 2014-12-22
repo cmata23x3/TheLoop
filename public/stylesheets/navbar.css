@@ -1,0 +1,34 @@
+#navbarContainer {
+    border-radius: 0px;
+    background-color: #993333;
+}
+#navbarContainer > .container-fluid {
+    max-width: 1170px;
+}
+
+#navbarContainer #navBrand {
+    color: white;
+}
+#navbarContainer #navBrand:hover {
+    color: #bbbbbb;
+}
+#navbarContainer .nav .active > a{
+    background-color: #aa4444;
+}
+#navbarContainer .nav-tab > a {
+    color: white;
+}
+#navbarContainer .nav-tab > a:hover {
+    color: #bbbbbb;
+}
+#newUserLinkButton {
+	padding : 0;
+	padding-left: 5px;
+}
+#navbarContainer #navUserEmail {
+	padding: 15px 10px;
+	color: white;
+}
+.login-modal-body{
+    
+}
